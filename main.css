@@ -14,11 +14,22 @@ body {
   width: fit-content;
 }
 
+button.no-browser-styling {
+  border: none !important;
+  box-shadow: none !important;
+  font-family: inherit;
+  font-size: inherit;
+}
+button.no-browser-styling:hover, button.no-browser-styling:active, button.no-browser-styling:focus {
+  outline: none !important;
+}
+
 .board .covered, .board .uncovered {
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
+  position: relative;
 }
 .board .covered:nth-child(odd) {
   background-color: #8ECC39;
@@ -53,4 +64,11 @@ body {
 }
 .board span._7 {
   color: #E35672;
+}
+
+.board .flag {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
