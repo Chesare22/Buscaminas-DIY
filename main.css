@@ -8,15 +8,13 @@ body {
 .board {
   display: grid;
   padding: 2px;
-  gap: 2px;
   background-color: darkgreen;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  width: 500px;
-  height: 500px;
+  grid-template-rows: repeat(21, 27px);
+  grid-template-columns: repeat(23, 27px);
+  width: fit-content;
 }
 
-.board .covered {
+.board .covered, .board .uncovered {
   width: 100%;
   height: 100%;
   display: grid;
@@ -27,4 +25,32 @@ body {
 }
 .board .covered:nth-child(even) {
   background-color: #A7D948;
+}
+.board .uncovered:nth-child(odd) {
+  background-color: #D7B899;
+}
+.board .uncovered:nth-child(even) {
+  background-color: #E5C29F;
+}
+
+.board span._1 {
+  color: blue;
+}
+.board span._2 {
+  color: green;
+}
+.board span._3 {
+  color: red;
+}
+.board span._4 {
+  color: purple;
+}
+.board span._5 {
+  color: darkorange;
+}
+.board span._6 {
+  color: darkblue;
+}
+.board span._7 {
+  color: #E35672;
 }
