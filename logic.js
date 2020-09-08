@@ -1,5 +1,6 @@
 import Game from './Game.js'
 import { mapMatrix } from './UsefulFunctions.js'
+import { createCells, possibleCells } from './View.js'
 
 const game = Game(21, 23, 99)
 const createFlagImage = () => {
@@ -13,39 +14,20 @@ const createFlagImage = () => {
 window.onload = function() {
   const board = document.getElementById('board')
 
-  const buttons = mapMatrix(game.board, number => {
-    const button = document.createElement('button')
-    button.className = 'covered no-browser-styling'
-
-    let cellContent
-    if (number === -1) {
-      cellContent = document.createElement('img')
-      cellContent.src = './assets/bomb.svg'
-      cellContent.alt = 'B'
-      cellContent.width = 20
-    } else {
-      cellContent = document.createElement('span')
-      if (number > 0) {
-        cellContent.className = `_${number}`
-        cellContent.innerText = number
-      }
-    }
-    cellContent.style.visibility = 'hidden'
-
-    button.appendChild(cellContent)
-    return button
-  })
+  const cells = createCells(game)
   const flags = mapMatrix(game.board, () => null)
 
   const handleClick = (row, column) => mouseEvent => {
-    console.log(`clicking coordinates [${row}, ${column}]`)
     if (mouseEvent.button === 0) {
       // uncover button
       game.pressUncoverButton(row, column)
-        .map(([ x, y ]) => buttons[x][y])
-        .forEach(button => {
+        .forEach(([ x, y ]) => {
+          const button = cells[x][y]
           button.className = 'uncovered no-browser-styling'
-          button.firstChild.style.visibility = 'visible'
+          if (!button.firstChild) {
+            const cellContent = possibleCells[game.board[x][y]]()
+            button.appendChild(cellContent)
+          }
         })
     } else if (mouseEvent.button === 2) {
       // flag button
@@ -53,18 +35,17 @@ window.onload = function() {
       if (showFlag) {
         const flagImg = flags[row][column] || createFlagImage()
         flags[row][column] = flagImg
-        buttons[row][column].appendChild(flagImg)
+        cells[row][column].appendChild(flagImg)
       } else if (flags[row][column]) {
-        buttons[row][column].removeChild(flags[row][column])
+        cells[row][column].removeChild(flags[row][column])
       }
     }
   }
-  buttons.forEach((row, rowIndex) => {
+  cells.forEach((row, rowIndex) => {
     row.forEach((button, columnIndex) => {
-      const x = rowIndex, y = columnIndex
       board.appendChild(button)
       button.addEventListener('contextmenu', e => { e.preventDefault(); return false })
-      button.addEventListener('mouseup', handleClick(x, y))
+      button.addEventListener('mouseup', handleClick(rowIndex, columnIndex))
     })
   })
 }
