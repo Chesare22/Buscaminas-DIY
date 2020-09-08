@@ -16,26 +16,26 @@ const Game = (rows, columns, bombs) => {
     get totalFlags() { return totalFlags },
     get gameIsFinished() { return cellsLeft === 0 },
 
-    pressFlagButton(rowIndex, columnIndex) {
-      if (uncoveredCells[rowIndex][columnIndex]) { return }
-      flags[rowIndex][columnIndex] = !flags[rowIndex][columnIndex]
-      totalFlags += flags[rowIndex][columnIndex] ? 1 : -1
-      return flags[rowIndex][columnIndex]
+    pressFlagButton(row, column) {
+      if (uncoveredCells[row][column]) { return }
+      flags[row][column] = !flags[row][column]
+      totalFlags += flags[row][column] ? 1 : -1
+      return flags[row][column]
     },
 
     // Returns an array of coordinates that should be uncovered
-    pressUncoverButton(rowIndex, columnIndex) {
-      if (flags[rowIndex][columnIndex] || uncoveredCells[rowIndex][columnIndex]) {
+    pressUncoverButton(row, column) {
+      if (flags[row][column] || uncoveredCells[row][column]) {
         return []
       }
 
-      if (minesBoard[rowIndex][columnIndex]) {
+      if (minesBoard[row][column]) {
         gameOver = true
       } else {
-        uncoveredCells[rowIndex][columnIndex] = true
+        uncoveredCells[row][column] = true
         cellsLeft--
       }
-      return [ [ rowIndex, columnIndex ] ]
+      return [ [ row, column ] ]
     },
   }
 }
