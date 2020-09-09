@@ -30,6 +30,7 @@ button.no-browser-styling:hover, button.no-browser-styling:active, button.no-bro
   display: grid;
   place-items: center;
   position: relative;
+  font-size: 120%;
 }
 .board .covered:nth-child(odd) {
   background-color: #8ECC39;
