@@ -10,6 +10,26 @@ const Game = (rows, columns, bombs) => {
   const board = createBoard(minesBoard, minesCoordinates)
   const uncoveredCells = JSON.parse(JSON.stringify(flags))
 
+  const uncoverCells = ([ row, column ], coordinates) => {
+    if (flags[row][column] || uncoveredCells[row][column]) {
+      return coordinates
+    }
+
+    --cellsLeft
+    uncoveredCells[row][column] = true
+    coordinates.push([ row, column ])
+
+    if (board[row][column] === 0) {
+      for (let i = Math.max(0, row - 1); i < Math.min(board.length, row + 2); i++) {
+        for (let j = Math.max(0, column - 1); j < Math.min(board[i].length, column + 2); j++) {
+          uncoverCells([ i, j ], coordinates)
+        }
+      }
+    }
+
+    return coordinates
+  }
+
   return {
     board,
     get gameOver() { return gameOver },
@@ -25,17 +45,12 @@ const Game = (rows, columns, bombs) => {
 
     // Returns an array of coordinates that should be uncovered
     pressUncoverButton([ row, column ]) {
-      if (flags[row][column] || uncoveredCells[row][column]) {
-        return []
-      }
-
       if (minesBoard[row][column]) {
         gameOver = true
-      } else {
-        uncoveredCells[row][column] = true
-        cellsLeft--
+        return [ [ row, column ] ]
       }
-      return [ [ row, column ] ]
+
+      return uncoverCells([ row, column ], [])
     },
   }
 }
