@@ -42,24 +42,24 @@ function View(boardNumbers) {
 
   return {
     cells,
-    uncoverCell([ x, y ]) {
-      const button = cells[x][y]
+    uncoverCell([ row, column ]) {
+      const button = cells[row][column]
       button.className = 'uncovered no-browser-styling'
       if (!button.firstChild) {
-        const number = boardNumbers[x][y]
+        const number = boardNumbers[row][column]
         const cellContent = createCellContent[number]()
         button.appendChild(cellContent)
       }
     },
-    addFlag(x, y) {
-      const flagImg = flags[x][y] || createCellContent.flag()
-      flags[x][y] = flagImg
-      cells[x][y].appendChild(flagImg)
+    addFlag([ row, column ]) {
+      const flagImg = flags[row][column] || createCellContent.flag()
+      flags[row][column] = flagImg
+      cells[row][column].appendChild(flagImg)
     },
-    deleteFlag(x, y) {
-      const flagImg = flags[x][y]
+    deleteFlag([ row, column ]) {
+      const flagImg = flags[row][column]
       if (flagImg) {
-        cells[x][y].removeChild(flagImg)
+        cells[row][column].removeChild(flagImg)
       }
     },
     appendCellsTo(boardDOM) {

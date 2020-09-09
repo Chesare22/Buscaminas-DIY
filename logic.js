@@ -5,18 +5,18 @@ const game = Game(21, 23, 99)
 const view = View(game.board)
 
 const handleClick = board => mouseEvent => {
-  const [ row, column ] = view.getCoordinates(mouseEvent, board)
+  const coordinates = view.getCoordinates(mouseEvent, board)
   if (mouseEvent.button === 0) {
     // uncover button
-    game.pressUncoverButton(row, column)
+    game.pressUncoverButton(coordinates)
       .forEach(view.uncoverCell)
   } else if (mouseEvent.button === 2) {
     // flag button
-    const showFlag = game.pressFlagButton(row, column)
+    const showFlag = game.pressFlagButton(coordinates)
     if (showFlag) {
-      view.addFlag(row, column)
+      view.addFlag(coordinates)
     } else {
-      view.deleteFlag(row, column)
+      view.deleteFlag(coordinates)
     }
   }
 }

@@ -16,7 +16,7 @@ const Game = (rows, columns, bombs) => {
     get totalFlags() { return totalFlags },
     get gameIsFinished() { return cellsLeft === 0 },
 
-    pressFlagButton(row, column) {
+    pressFlagButton([ row, column ]) {
       if (uncoveredCells[row][column]) { return }
       flags[row][column] = !flags[row][column]
       totalFlags += flags[row][column] ? 1 : -1
@@ -24,7 +24,7 @@ const Game = (rows, columns, bombs) => {
     },
 
     // Returns an array of coordinates that should be uncovered
-    pressUncoverButton(row, column) {
+    pressUncoverButton([ row, column ]) {
       if (flags[row][column] || uncoveredCells[row][column]) {
         return []
       }
