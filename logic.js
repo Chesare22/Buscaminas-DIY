@@ -4,7 +4,8 @@ import View from './View.js'
 const game = Game(21, 23, 99)
 const view = View(game.board)
 
-const handleClick = (row, column) => mouseEvent => {
+const handleClick = board => mouseEvent => {
+  const [ row, column ] = view.getCoordinates(mouseEvent, board)
   if (mouseEvent.button === 0) {
     // uncover button
     game.pressUncoverButton(row, column)
@@ -23,11 +24,7 @@ const handleClick = (row, column) => mouseEvent => {
 window.onload = function() {
   const board = document.getElementById('board')
 
-  view.cells.forEach((row, rowIndex) => {
-    row.forEach((cell, columnIndex) => {
-      board.appendChild(cell)
-      cell.addEventListener('contextmenu', e => { e.preventDefault(); return false })
-      cell.addEventListener('mouseup', handleClick(rowIndex, columnIndex))
-    })
-  })
+  view.appendCellsTo(board)
+  board.addEventListener('contextmenu', e => { e.preventDefault(); return false })
+  board.addEventListener('mouseup', handleClick(board))
 }

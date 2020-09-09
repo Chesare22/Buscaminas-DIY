@@ -28,14 +28,17 @@ const createCellContent = {
 
 
 const createCell = () => {
-  const button = document.createElement('button')
+  const button = document.createElement('div')
   button.className = 'covered no-browser-styling'
   return button
 }
 
-function View(board) {
-  const cells = mapMatrix(board, createCell)
-  const flags = createMatrix(board.length, board[0].length, null)
+function View(boardNumbers) {
+  const amountOfRows = boardNumbers.length
+  const amountOfColumns = boardNumbers[0].length
+
+  const cells = mapMatrix(boardNumbers, createCell)
+  const flags = createMatrix(amountOfRows, amountOfColumns, null)
 
   return {
     cells,
@@ -43,7 +46,7 @@ function View(board) {
       const button = cells[x][y]
       button.className = 'uncovered no-browser-styling'
       if (!button.firstChild) {
-        const number = board[x][y]
+        const number = boardNumbers[x][y]
         const cellContent = createCellContent[number]()
         button.appendChild(cellContent)
       }
@@ -58,6 +61,23 @@ function View(board) {
       if (flagImg) {
         cells[x][y].removeChild(flagImg)
       }
+    },
+    appendCellsTo(boardDOM) {
+      cells.forEach(row => {
+        row.forEach(cell => {
+          boardDOM.appendChild(cell)
+        })
+      })
+    },
+    getCoordinates(mouseEvent, boardDOM) {
+      const box = boardDOM.getBoundingClientRect()
+      const left = mouseEvent.clientX - (box.left + window.pageXOffset),
+        top = mouseEvent.clientY - (box.top + window.pageYOffset)
+
+      return [
+        Math.floor(top * amountOfColumns / boardDOM.offsetWidth),
+        Math.floor(left * amountOfRows / boardDOM.offsetHeight),
+      ]
     },
   }
 }
