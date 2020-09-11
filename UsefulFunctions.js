@@ -13,7 +13,7 @@ const createMinesBoard = (board, amountOfMines) => {
     const columnIndex = Math.floor(Math.random() * minesBoard[rowIndex].length)
     if (!minesBoard[rowIndex][columnIndex]) {
       minesBoard[rowIndex][columnIndex] = true
-      coordinates[i++] = [ rowIndex, columnIndex ]
+      coordinates[i++] = [rowIndex, columnIndex]
     }
   }
 
@@ -23,7 +23,7 @@ const createMinesBoard = (board, amountOfMines) => {
 const createBoard = (minesBoard, minesCoordinates) => {
   const board = mapMatrix(minesBoard, () => 0)
 
-  minesCoordinates.forEach(([ row, column ]) => {
+  minesCoordinates.forEach(([row, column]) => {
     board[row][column] = -1
     for (let i = Math.max(0, row - 1); i < Math.min(board.length, row + 2); i++) {
       for (let j = Math.max(0, column - 1); j < Math.min(board[i].length, column + 2); j++) {
