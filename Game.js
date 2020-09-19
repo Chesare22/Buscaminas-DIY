@@ -36,6 +36,10 @@ const Game = (rows, columns, bombs) => {
     get totalFlags() { return totalFlags },
     get gameIsFinished() { return cellsLeft === 0 },
 
+    // null | {
+    //   hasFlag: boolean,
+    //   remainingFlags: number,
+    // }
     pressFlagButton([row, column]) {
       if (uncoveredCells[row][column]) { return }
       flags[row][column] = !flags[row][column]

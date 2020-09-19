@@ -9,8 +9,6 @@ body {
   display: grid;
   padding: 2px;
   background-color: darkgreen;
-  grid-template-rows: repeat(21, 27px);
-  grid-template-columns: repeat(23, 27px);
   width: fit-content;
 }
 
@@ -32,16 +30,16 @@ button.no-browser-styling:hover, button.no-browser-styling:active, button.no-bro
   position: relative;
   font-size: 120%;
 }
-.board .covered:nth-child(odd) {
+.board .covered.dark {
   background-color: #8ECC39;
 }
-.board .covered:nth-child(even) {
+.board .covered.light {
   background-color: #A7D948;
 }
-.board .uncovered:nth-child(odd) {
+.board .uncovered.dark {
   background-color: #D7B899;
 }
-.board .uncovered:nth-child(even) {
+.board .uncovered.light {
   background-color: #E5C29F;
 }
 

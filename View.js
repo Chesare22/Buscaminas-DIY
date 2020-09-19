@@ -1,7 +1,7 @@
 import { mapMatrix, createMatrix } from './UsefulFunctions.js'
 
 const createCellContent = {
-  '-1'() {
+  bomb() {
     const cellContent = document.createElement('img')
     cellContent.src = './assets/bomb.svg'
     cellContent.alt = 'B'
@@ -21,28 +21,30 @@ const createCellContent = {
     const flag = document.createElement('img')
     flag.src = './assets/flag.svg'
     flag.className = 'flag'
+    flag.alt = 'F'
     flag.width = 20
     return flag
   },
 }
 
 
-const createCell = () => {
-  const button = document.createElement('div')
-  button.className = 'covered no-browser-styling'
-  return button
+const newCell = brightness => {
+  const cell = document.createElement('div')
+  cell.classList.add('covered')
+  cell.classList.add(brightness)
+  return cell
 }
 
 function View(boardNumbers) {
   const amountOfRows = boardNumbers.length
   const amountOfColumns = boardNumbers[0].length
 
-  const cells = mapMatrix(boardNumbers, createCell)
+  const cells = mapMatrix(boardNumbers, newCell)
   const flags = createMatrix(amountOfRows, amountOfColumns, null)
 
   return {
     cells,
-    uncoverCell([ row, column ]) {
+    uncoverCell([row, column]) {
       const button = cells[row][column]
       button.className = 'uncovered no-browser-styling'
       if (!button.firstChild) {
@@ -51,12 +53,12 @@ function View(boardNumbers) {
         button.appendChild(cellContent)
       }
     },
-    addFlag([ row, column ]) {
+    addFlag([row, column]) {
       const flagImg = flags[row][column] || createCellContent.flag()
       flags[row][column] = flagImg
       cells[row][column].appendChild(flagImg)
     },
-    deleteFlag([ row, column ]) {
+    deleteFlag([row, column]) {
       const flagImg = flags[row][column]
       if (flagImg) {
         cells[row][column].removeChild(flagImg)
