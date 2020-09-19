@@ -106,5 +106,15 @@ const drawBoard = ({
         }
       }
     },
+    getCoordinates(mouseEvent) {
+      const box = board.getBoundingClientRect()
+      const left = mouseEvent.clientX - (box.left + window.pageXOffset),
+        top = mouseEvent.clientY - (box.top + window.pageYOffset)
+
+      return {
+        row: Math.floor(top * totalColumns / board.offsetWidth),
+        column: Math.floor(left * totalRows / board.offsetHeight),
+      }
+    },
   }
 }
