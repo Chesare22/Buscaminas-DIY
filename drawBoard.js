@@ -74,7 +74,7 @@ const drawBoard = ({
       if (cell.classList.contains('uncovered')) { return }
       clearContent(cell)
     },
-    reset({ rows = totalRows, columns = totalColumns, cellWidth: newCellWidth = cellWidth }) {
+    reset({ rows = totalRows, columns = totalColumns, cellWidth: newCellWidth = cellWidth } = {}) {
       const previousAmountOfCells = totalColumns * totalRows
       const currentAmountOfCells = rows * columns
       totalRows = rows
@@ -96,7 +96,7 @@ const drawBoard = ({
         }
       }
 
-      // Cover all cells
+      // Style all cells
       for (let row = 0; row < totalRows; row++) {
         for (let column = 0; column < totalColumns; column++) {
           const brightness = brightnessLevels[(row + column) % 2]
