@@ -6,15 +6,6 @@ const createCellContent = {
     cellContent.width = 20
     return cellContent
   },
-  // Cells from 1 to 8
-  ...Array(9).fill().map((foo, index) => () => {
-    const cellContent = document.createElement('span')
-    if (index > 0) {
-      cellContent.className = `_${index}`
-      cellContent.innerText = index
-    }
-    return cellContent
-  }),
   flag() {
     const flag = document.createElement('img')
     flag.src = './assets/flag.svg'
@@ -23,8 +14,15 @@ const createCellContent = {
     flag.width = 20
     return flag
   },
+  // Cells from 0 to 8
+  ...Array(9).fill().map((foo, index) => () => {
+    const cellContent = document.createElement('span')
+    cellContent.className = `_${index}`
+    cellContent.innerText = index
+    return cellContent
+  }),
 }
-
+delete createCellContent['0']
 
 const newCell = brightness => {
   const cell = document.createElement('div')
@@ -35,6 +33,11 @@ const newCell = brightness => {
 
 const brightnessLevels = ['dark', 'light']
 
+const clearContent = element => {
+  while (element.firstChild) {
+    element.removeChild(element.firstChild)
+  }
+}
 
 /* exported drawBoard */
 const drawBoard = ({
@@ -63,27 +66,44 @@ const drawBoard = ({
     placeFlag({ row, column }) {
       const cell = board.children.item((row * totalColumns) + column)
       if (cell.classList.contains('uncovered')) { return }
-      while (cell.firstChild) {
-        cell.removeChild(cell.firstChild)
-      }
+      clearContent(cell)
       cell.appendChild(createCellContent.flag())
     },
     removeFlag({ row, column }) {
       const cell = board.children.item((row * totalColumns) + column)
       if (cell.classList.contains('uncovered')) { return }
-      while (cell.firstChild) {
-        cell.removeChild(cell.firstChild)
-      }
+      clearContent(cell)
     },
-    reset({ rows, columns, cellWidth: newCellWidth }) {
-      if (rows > 0) {
-        totalRows = rows
+    reset({ rows = totalRows, columns = totalColumns, cellWidth: newCellWidth = cellWidth }) {
+      const previousAmountOfCells = totalColumns * totalRows
+      const currentAmountOfCells = rows * columns
+      totalRows = rows
+      totalColumns = columns
+      cellWidth = newCellWidth
+
+      // Resize board
+      board.style['grid-template-rows'] = `repeat(${totalRows}, ${cellWidth}px)`
+      board.style['grid-template-columns'] = `repeat(${totalColumns}, ${cellWidth}px)`
+
+      // Create or remove cells
+      if (currentAmountOfCells > previousAmountOfCells) {
+        for (let index = previousAmountOfCells; index < currentAmountOfCells; index++) {
+          board.appendChild(document.createElement('div'))
+        }
+      } else if (currentAmountOfCells < previousAmountOfCells) {
+        for (let index = currentAmountOfCells; index < previousAmountOfCells; index++) {
+          board.removeChild(board.firstChild)
+        }
       }
-      if (columns > 0) {
-        totalColumns = columns
-      }
-      if (newCellWidth > 0) {
-        cellWidth = newCellWidth
+
+      // Cover all cells
+      for (let row = 0; row < totalRows; row++) {
+        for (let column = 0; column < totalColumns; column++) {
+          const brightness = brightnessLevels[(row + column) % 2]
+          const cell = board.children.item((row * totalColumns) + column)
+          cell.className = `covered ${brightness}`
+          clearContent(cell)
+        }
       }
     },
   }
