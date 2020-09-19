@@ -1,5 +1,3 @@
-/* exported drawBoard */
-
 const createCellContent = {
   bomb() {
     const cellContent = document.createElement('img')
@@ -38,6 +36,7 @@ const newCell = brightness => {
 const brightnessLevels = ['dark', 'light']
 
 
+/* exported drawBoard */
 const drawBoard = ({
   element: board,
   rows: totalRows,
@@ -60,10 +59,22 @@ const drawBoard = ({
       if (createCellContent[content]) {
         cell.appendChild(createCellContent[content]())
       }
-      return cell
     },
-    placeFlag({ row, column }) {},
-    removeFlag({ row, column }) {},
+    placeFlag({ row, column }) {
+      const cell = board.children.item((row * totalColumns) + column)
+      if (cell.classList.contains('uncovered')) { return }
+      while (cell.firstChild) {
+        cell.removeChild(cell.firstChild)
+      }
+      cell.appendChild(createCellContent.flag())
+    },
+    removeFlag({ row, column }) {
+      const cell = board.children.item((row * totalColumns) + column)
+      if (cell.classList.contains('uncovered')) { return }
+      while (cell.firstChild) {
+        cell.removeChild(cell.firstChild)
+      }
+    },
     reset({ rows, columns, cellWidth: newCellWidth }) {
       if (rows > 0) {
         totalRows = rows
