@@ -49,7 +49,7 @@ const createNewGame = ({ rows, columns, mines }) => {
 
     --cellsLeft
     state.uncoveredCells[row][column] = true
-    coordinates.push({ row, column })
+    coordinates.push({ row, column, content: state.board[row][column] })
 
     if (state.board[row][column] === 0) {
       for (let i = Math.max(0, row - 1); i < Math.min(rows, row + 2); i++) {
@@ -91,7 +91,7 @@ const createNewGame = ({ rows, columns, mines }) => {
     uncover({ row, column }) {
       if (state.board[row][column] === -1) {
         gameOver = true
-        return [{ row, column }]
+        return [{ row, column, content: 'bomb' }]
       }
 
       return recursiveUncover(row, column, [])
