@@ -89,6 +89,9 @@ const createNewGame = ({ rows, columns, mines }) => {
 
     // Returns an array of coordinates that should be uncovered
     uncover({ row, column }) {
+      if (state.flags[row][column]) {
+        return []
+      }
       if (state.board[row][column] === -1) {
         gameOver = true
         return [{ row, column, content: 'bomb' }]
