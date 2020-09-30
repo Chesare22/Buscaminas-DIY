@@ -19,7 +19,28 @@
   </header>
 
   <main>
-    <div class="board" id="board"></div>
+    <div class="stats-and-board-wrapper">
+
+      <div class="stats">
+        <div class="centered-row">
+          <label for="difficulty">Dificultad: </label>
+          <select id="difficulty" class="dropdown">
+            <option>Volvo</option>
+            <option>Saab</option>
+            <option>Opel</option>
+            <option>Audi</option>
+          </select>
+        </div>
+        
+        <div class="centered-row">
+          <img src="./assets/flag.svg" alt="F" width="25">
+          <span id="flags">10</span>
+        </div>
+      </div>
+
+      <div class="board" id="board"></div>
+
+    </div>
   </main>
 
 </body>

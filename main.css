@@ -5,21 +5,44 @@ body {
   font-family: 'Roboto Mono', monospace;
 }
 
+header {
+  width: 100%;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+.stats-and-board-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+.centered-row {
+  display: flex;
+  align-items: center;
+}
+select.dropdown {
+  padding: .4em;
+  border-radius: 3px;
+  background-color: white;
+  font-family: inherit;
+}
+
 .board {
   display: grid;
   padding: 2px;
   background-color: darkgreen;
   width: fit-content;
-}
-
-button.no-browser-styling {
-  border: none !important;
-  box-shadow: none !important;
-  font-family: inherit;
-  font-size: inherit;
-}
-button.no-browser-styling:hover, button.no-browser-styling:active, button.no-browser-styling:focus {
-  outline: none !important;
 }
 
 .board .covered, .board .uncovered {
