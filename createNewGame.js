@@ -93,7 +93,7 @@ const createNewGame = ({ rows, columns, mines, emptyCell }) => {
       }
 
       state.flags[row][column] = !state.flags[row][column]
-      flagsLeft += state.flags[row][column] ? 1 : -1
+      flagsLeft += state.flags[row][column] ? -1 : 1
       return {
         hasFlag: state.flags[row][column],
         flagsLeft,

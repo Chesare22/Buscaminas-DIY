@@ -34,17 +34,18 @@ let config = difficulties[defaultSelectedDifficulty].config
 
 window.onload = function() {
   const board = document.getElementById('board')
+  const difficultySelector = document.getElementById('difficulty-selector')
+  const remainingFlags = document.getElementById('flags')
 
+  remainingFlags.innerText = config.mines
+
+  let minesweeper
   const boardUI = drawBoard({
     rows: config.rows,
     columns: config.columns,
     cellWidth: config.cellWidth,
     element: board,
   })
-  let minesweeper
-
-
-  const difficultySelector = document.getElementById('difficulty-selector')
 
   difficulties.forEach((difficulty, index) => {
     const option = document.createElement('option')
@@ -96,6 +97,7 @@ window.onload = function() {
       } else {
         boardUI.removeFlag(coordinates)
       }
+      remainingFlags.innerText = changes.flagsLeft
     }
 
     minesweeper.printState()
