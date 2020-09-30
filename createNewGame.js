@@ -75,7 +75,10 @@ const createNewGame = ({ rows, columns, mines, emptyCell }) => {
 
   return {
     get gameOver() { return gameOver },
+    set gameOver(foo) {},
+
     get victory() { return cellsLeft === 0 },
+    set victory(foo) {},
 
     printState(keys = ['board', 'flags', 'uncoveredCells']) {
       keys.forEach(key => {
