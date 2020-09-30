@@ -30,15 +30,15 @@ const difficulties = [
   },
 ]
 
-let difficultyConfig = difficulties[defaultSelectedDifficulty].config
+let config = difficulties[defaultSelectedDifficulty].config
 
 window.onload = function() {
   const board = document.getElementById('board')
 
   const boardUI = drawBoard({
-    rows: difficultyConfig.rows,
-    columns: difficultyConfig.columns,
-    cellWidth: difficultyConfig.cellWidth,
+    rows: config.rows,
+    columns: config.columns,
+    cellWidth: config.cellWidth,
     element: board,
   })
   let minesweeper
@@ -57,11 +57,11 @@ window.onload = function() {
   })
 
   difficultySelector.addEventListener('change', () => {
-    difficultyConfig = difficulties[difficultySelector.value].config
+    config = difficulties[difficultySelector.value].config
     boardUI.reset({
-      rows: difficultyConfig.rows,
-      columns: difficultyConfig.columns,
-      cellWidth: difficultyConfig.cellWidth,
+      rows: config.rows,
+      columns: config.columns,
+      cellWidth: config.cellWidth,
     })
     minesweeper = null
   })
@@ -73,9 +73,9 @@ window.onload = function() {
 
     if (!minesweeper) {
       minesweeper = createNewGame({
-        rows: difficultyConfig.rows,
-        columns: difficultyConfig.columns,
-        mines: difficultyConfig.mines,
+        rows: config.rows,
+        columns: config.columns,
+        mines: config.mines,
         emptyCell: coordinates,
       })
       minesweeper.printState()
