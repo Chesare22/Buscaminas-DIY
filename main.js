@@ -1,44 +1,13 @@
-/* global drawBoard, createNewGame */
-const defaultSelectedDifficulty = 1
-const difficulties = [
-  {
-    label: 'Fácil',
-    config: {
-      rows: 8,
-      columns: 10,
-      mines: 10,
-      cellWidth: 40,
-    },
-  },
-  {
-    label: 'Media',
-    config: {
-      rows: 14,
-      columns: 18,
-      mines: 40,
-      cellWidth: 30,
-    },
-  },
-  {
-    label: 'Difícil',
-    config: {
-      rows: 20,
-      columns: 24,
-      mines: 99,
-      cellWidth: 25,
-    },
-  },
-]
-
-let config = difficulties[defaultSelectedDifficulty].config
+/* global drawBoard, createNewGame, configHelper */
 
 window.onload = function() {
   const board = document.getElementById('board')
-  const difficultySelector = document.getElementById('difficulty-selector')
   const remainingFlags = document.getElementById('flags')
+  const difficultyDropdown = document.getElementById('difficulty-dropdown')
+
+  let config = configHelper.initialConfig
 
   remainingFlags.innerText = config.mines
-
   let minesweeper
   const boardUI = drawBoard({
     rows: config.rows,
@@ -47,18 +16,7 @@ window.onload = function() {
     element: board,
   })
 
-  difficulties.forEach((difficulty, index) => {
-    const option = document.createElement('option')
-    option.text = difficulty.label
-    option.value = index
-    if (index === defaultSelectedDifficulty) {
-      option.selected = true
-    }
-    difficultySelector.appendChild(option)
-  })
-
-  difficultySelector.addEventListener('change', () => {
-    config = difficulties[difficultySelector.value].config
+  function resetGame() {
     boardUI.reset({
       rows: config.rows,
       columns: config.columns,
@@ -66,8 +24,16 @@ window.onload = function() {
     })
     minesweeper = null
     remainingFlags.innerText = config.mines
-  })
+  }
 
+
+  const difficultySelector = configHelper.createDifficultySelector({
+    element: difficultyDropdown,
+  })
+  difficultySelector.addListener(newConfig => {
+    config = newConfig
+    resetGame()
+  })
 
   board.addEventListener('contextmenu', e => { e.preventDefault(); return false })
   board.addEventListener('mouseup', mouseEvent => {
@@ -99,7 +65,5 @@ window.onload = function() {
       }
       remainingFlags.innerText = changes.flagsLeft
     }
-
-    minesweeper.printState()
   })
 }

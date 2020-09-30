@@ -8,6 +8,7 @@
   <link rel="icon" type="image/svg+xml" href="./assets/flag.svg" sizes="any">
   <script src="./main.js"></script>
   <script src="./drawBoard.js"></script>
+  <script src="./configHelper.js"></script>
   <script src="./createNewGame.js"></script>
   <title>Buscaminas casero</title>
 </head>
@@ -23,13 +24,13 @@
 
       <div class="stats">
         <div class="centered-row">
-          <label for="difficulty-selector">Dificultad: </label>
-          <select id="difficulty-selector" class="dropdown"></select>
+          <label for="difficulty-dropdown">Dificultad: </label>
+          <select id="difficulty-dropdown" class="dropdown"></select>
         </div>
         
         <div class="centered-row">
           <img src="./assets/flag.svg" alt="F" width="25">
-          <span id="flags"></span>
+          <span id="flags">?</span>
         </div>
       </div>
 
