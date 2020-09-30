@@ -8,12 +8,7 @@ const mines = 10
 window.onload = function() {
   const board = document.getElementById('board')
 
-  const boardUI = drawBoard({
-    rows,
-    columns,
-    cellWidth,
-    element: board,
-  })
+  const boardUI = drawBoard({ rows, columns, cellWidth, element: board })
   let minesweeper
 
   board.addEventListener('contextmenu', e => { e.preventDefault(); return false })
@@ -21,18 +16,18 @@ window.onload = function() {
     const coordinates = boardUI.getCoordinates(mouseEvent)
 
     if (!minesweeper) {
-      // eslint-disable-next-line object-curly-newline
       minesweeper = createNewGame({ rows, columns, mines, emptyCell: coordinates })
       minesweeper.printState()
     }
 
+    // uncover button was pressed
     if (mouseEvent.button === 0) {
-      // uncover button
       minesweeper
         .uncover(coordinates)
         .forEach(boardUI.uncoverCell)
+
+    // flag button was pressed
     } else if (mouseEvent.button === 2) {
-      // flag button
       const { hasFlag } = minesweeper.flag(coordinates)
       if (hasFlag) {
         boardUI.placeFlag(coordinates)

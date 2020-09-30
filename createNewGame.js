@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 const createMatrix = ({ rows, columns, value }) => Array(rows)
   .fill()
   .map(() => Array(columns).fill(value))
