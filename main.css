@@ -42,6 +42,9 @@ button.no-browser-styling:hover, button.no-browser-styling:active, button.no-bro
 .board .uncovered.light {
   background-color: #E5C29F;
 }
+.board .covered:hover {
+  background-color: #BEE17D;
+}
 
 .board span._1 {
   color: blue;
