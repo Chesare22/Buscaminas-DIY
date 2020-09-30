@@ -2,7 +2,7 @@ const createMatrix = ({ rows, columns, value }) => Array(rows)
   .fill()
   .map(() => Array(columns).fill(value))
 
-const placeMines = ({ rows, columns, mines: amountOfMines, emptyCell }) => {
+const placeMines = ({ rows, columns, mines: totalMines, emptyCell }) => {
   const board = createMatrix({ rows, columns, value: 0 })
 
   function canPlaceMine({ row, column }) {
@@ -15,18 +15,23 @@ const placeMines = ({ rows, columns, mines: amountOfMines, emptyCell }) => {
       emptyCell.column - 1 <= column && column <= emptyCell.column + 1))
   }
 
-  let minesLeft = 0
-  while (minesLeft < amountOfMines) {
+  let placedMines = 0
+  while (placedMines < totalMines) {
     const row = Math.floor(Math.random() * rows)
     const column = Math.floor(Math.random() * columns)
 
     if (canPlaceMine({ row, column })) {
-      ++minesLeft
+      ++placedMines
       board[row][column] = -1
 
-      // For every mine, add 1 to the cells around
-      for (let i = Math.max(0, row - 1); i < Math.min(rows, row + 2); i++) {
-        for (let j = Math.max(0, column - 1); j < Math.min(columns, column + 2); j++) {
+      // Increment the content of the surrounding cells (without mines) by 1
+      const startingRow = Math.max(0, row - 1)
+      const finalRow = Math.min(rows - 1, row + 1)
+      const startingColumn = Math.max(0, column - 1)
+      const finalColumn = Math.min(columns - 1, column + 1)
+
+      for (let i = startingRow; i <= finalRow; i++) {
+        for (let j = startingColumn; j <= finalColumn; j++) {
           if (board[i][j] !== -1) {
             ++board[i][j]
           }
