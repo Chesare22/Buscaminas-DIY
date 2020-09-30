@@ -43,6 +43,7 @@ select.dropdown {
   padding: 2px;
   background-color: darkgreen;
   width: fit-content;
+  cursor: default;
 }
 
 .board .covered, .board .uncovered {
