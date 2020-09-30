@@ -65,6 +65,7 @@ window.onload = function() {
       cellWidth: config.cellWidth,
     })
     minesweeper = null
+    remainingFlags.innerText = config.mines
   })
 
 
@@ -79,7 +80,6 @@ window.onload = function() {
         mines: config.mines,
         emptyCell: coordinates,
       })
-      minesweeper.printState()
     }
 
     // uncover button was pressed
