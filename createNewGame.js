@@ -88,7 +88,7 @@ const createNewGame = ({ rows, columns, mines, emptyCell }) => {
     },
 
     flag({ row, column }) {
-      if (state.uncoveredCells[row][column]) {
+      if (state.uncoveredCells[row][column] || gameOver || this.victory) {
         return null
       }
 
@@ -102,7 +102,7 @@ const createNewGame = ({ rows, columns, mines, emptyCell }) => {
 
     // Returns an array of coordinates that should be uncovered
     uncover({ row, column }) {
-      if (state.flags[row][column]) {
+      if (state.flags[row][column] || gameOver || this.victory) {
         return []
       }
       if (state.board[row][column] === -1) {

@@ -28,8 +28,9 @@ window.onload = function() {
 
     // flag button was pressed
     } else if (mouseEvent.button === 2) {
-      const { hasFlag } = minesweeper.flag(coordinates)
-      if (hasFlag) {
+      const changes = minesweeper.flag(coordinates)
+      if (!changes) { return }
+      if (changes.hasFlag) {
         boardUI.placeFlag(coordinates)
       } else {
         boardUI.removeFlag(coordinates)
