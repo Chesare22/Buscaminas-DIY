@@ -1,9 +1,26 @@
 /* global drawBoard, createNewGame */
+const difficulty = {
+  easy: {
+    rows: 8,
+    columns: 10,
+    mines: 10,
+    cellWidth: 40,
+  },
+  medium: {
+    rows: 14,
+    columns: 18,
+    mines: 40,
+    cellWidth: 30,
+  },
+  hard: {
+    rows: 20,
+    columns: 24,
+    mines: 99,
+    cellWidth: 25,
+  },
+}
 
-const rows = 11
-const columns = 9
-const cellWidth = 30
-const mines = 10
+const { rows, columns, cellWidth, mines } = difficulty.easy
 
 window.onload = function() {
   const board = document.getElementById('board')
