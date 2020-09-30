@@ -1,5 +1,6 @@
 /* global drawBoard, createNewGame */
-const difficulty = [
+const defaultSelectedDifficulty = 1
+const difficulties = [
   {
     label: 'Fácil',
     config: {
@@ -29,20 +30,54 @@ const difficulty = [
   },
 ]
 
-const { rows, columns, cellWidth, mines } = difficulty[0].config
+let difficultyConfig = difficulties[defaultSelectedDifficulty].config
 
 window.onload = function() {
   const board = document.getElementById('board')
 
-  const boardUI = drawBoard({ rows, columns, cellWidth, element: board })
+  const boardUI = drawBoard({
+    rows: difficultyConfig.rows,
+    columns: difficultyConfig.columns,
+    cellWidth: difficultyConfig.cellWidth,
+    element: board,
+  })
   let minesweeper
+
+
+  const difficultySelector = document.getElementById('difficulty-selector')
+
+  difficulties.forEach((difficulty, index) => {
+    const option = document.createElement('option')
+    option.text = difficulty.label
+    option.value = index
+    if (index === defaultSelectedDifficulty) {
+      option.selected = true
+    }
+    difficultySelector.appendChild(option)
+  })
+
+  difficultySelector.addEventListener('change', () => {
+    difficultyConfig = difficulties[difficultySelector.value].config
+    boardUI.reset({
+      rows: difficultyConfig.rows,
+      columns: difficultyConfig.columns,
+      cellWidth: difficultyConfig.cellWidth,
+    })
+    minesweeper = null
+  })
+
 
   board.addEventListener('contextmenu', e => { e.preventDefault(); return false })
   board.addEventListener('mouseup', mouseEvent => {
     const coordinates = boardUI.getCoordinates(mouseEvent)
 
     if (!minesweeper) {
-      minesweeper = createNewGame({ rows, columns, mines, emptyCell: coordinates })
+      minesweeper = createNewGame({
+        rows: difficultyConfig.rows,
+        columns: difficultyConfig.columns,
+        mines: difficultyConfig.mines,
+        emptyCell: coordinates,
+      })
       minesweeper.printState()
     }
 
