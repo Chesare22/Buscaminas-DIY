@@ -1,16 +1,27 @@
+/* eslint-disable object-curly-newline */
 const createMatrix = ({ rows, columns, value }) => Array(rows)
   .fill()
   .map(() => Array(columns).fill(value))
 
-const placeMines = ({ rows, columns, mines: amountOfMines }) => {
+const placeMines = ({ rows, columns, mines: amountOfMines, emptyCell }) => {
   const board = createMatrix({ rows, columns, value: 0 })
+
+  function canPlaceMine({ row, column }) {
+    // You can't place a mine in the following scenarios:
+    return !(
+      // In a cell that already contains a mine
+      board[row][column] === -1 ||
+      // In or next to the empty cell
+      (emptyCell.row - 1 <= row && row <= emptyCell.row + 1 &&
+      emptyCell.column - 1 <= column && column <= emptyCell.column + 1))
+  }
 
   let minesLeft = 0
   while (minesLeft < amountOfMines) {
     const row = Math.floor(Math.random() * rows)
     const column = Math.floor(Math.random() * columns)
 
-    if (board[row][column] !== -1) {
+    if (canPlaceMine({ row, column })) {
       ++minesLeft
       board[row][column] = -1
 
@@ -30,13 +41,13 @@ const placeMines = ({ rows, columns, mines: amountOfMines }) => {
 
 
 /* exported createNewGame */
-const createNewGame = ({ rows, columns, mines }) => {
+const createNewGame = ({ rows, columns, mines, emptyCell }) => {
   let gameOver = false
   let flagsLeft = mines
   let cellsLeft = (rows * columns) - mines
 
   const state = {
-    board: placeMines({ rows, columns, mines }),
+    board: placeMines({ rows, columns, mines, emptyCell }),
     flags: createMatrix({ rows, columns, value: false }),
     uncoveredCells: createMatrix({ rows, columns, value: false }),
   }

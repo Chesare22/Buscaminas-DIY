@@ -14,12 +14,17 @@ window.onload = function() {
     cellWidth,
     element: board,
   })
-  const minesweeper = createNewGame({ rows, columns, mines })
-  minesweeper.printState()
+  let minesweeper
 
   board.addEventListener('contextmenu', e => { e.preventDefault(); return false })
   board.addEventListener('mouseup', mouseEvent => {
     const coordinates = boardUI.getCoordinates(mouseEvent)
+
+    if (!minesweeper) {
+      // eslint-disable-next-line object-curly-newline
+      minesweeper = createNewGame({ rows, columns, mines, emptyCell: coordinates })
+      minesweeper.printState()
+    }
 
     if (mouseEvent.button === 0) {
       // uncover button
