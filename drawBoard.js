@@ -108,8 +108,8 @@ const drawBoard = ({
     },
     getCoordinates(mouseEvent) {
       const box = board.getBoundingClientRect()
-      const left = mouseEvent.clientX - (box.left + window.pageXOffset),
-        top = mouseEvent.clientY - (box.top + window.pageYOffset)
+      const left = mouseEvent.clientX - (box.left + window.pageXOffset - window.scrollX),
+        top = mouseEvent.clientY - (box.top + window.pageYOffset - window.scrollY)
 
       return {
         row: Math.floor(top * totalColumns / board.offsetWidth),
