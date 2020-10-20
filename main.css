@@ -44,6 +44,7 @@ select.dropdown {
   background-color: darkgreen;
   width: fit-content;
   cursor: default;
+  font-weight: bold;
 }
 
 .board .covered, .board .uncovered {
@@ -52,7 +53,6 @@ select.dropdown {
   display: grid;
   place-items: center;
   position: relative;
-  font-size: 120%;
 }
 .board .covered.dark {
   background-color: #8ECC39;

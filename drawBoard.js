@@ -1,24 +1,25 @@
 const createCellContent = {
-  bomb() {
+  bomb(cellWidth) {
     const cellContent = document.createElement('img')
     cellContent.src = './assets/bomb.svg'
     cellContent.alt = 'B'
-    cellContent.width = 20
+    cellContent.width = cellWidth * 0.8
     return cellContent
   },
-  flag() {
+  flag(cellWidth) {
     const flag = document.createElement('img')
     flag.src = './assets/flag.svg'
     flag.className = 'flag'
     flag.alt = 'F'
-    flag.width = 20
+    flag.width = cellWidth * 0.8
     return flag
   },
   // Cells from 0 to 8
-  ...Array(9).fill().map((foo, index) => () => {
+  ...Array(9).fill().map((foo, index) => cellWidth => {
     const cellContent = document.createElement('span')
     cellContent.className = `_${index}`
     cellContent.innerText = index
+    cellContent.style['font-size'] = `${cellWidth * 0.8}px`
     return cellContent
   }),
 }
@@ -60,14 +61,14 @@ const drawBoard = ({
       const cell = board.children.item((row * totalColumns) + column)
       cell.classList.replace('covered', 'uncovered')
       if (createCellContent[content]) {
-        cell.appendChild(createCellContent[content]())
+        cell.appendChild(createCellContent[content](cellWidth))
       }
     },
     placeFlag({ row, column }) {
       const cell = board.children.item((row * totalColumns) + column)
       if (cell.classList.contains('uncovered')) { return }
       clearContent(cell)
-      cell.appendChild(createCellContent.flag())
+      cell.appendChild(createCellContent.flag(cellWidth))
     },
     removeFlag({ row, column }) {
       const cell = board.children.item((row * totalColumns) + column)
