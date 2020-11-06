@@ -41,6 +41,11 @@ window.onload = function() {
     resetGame()
   })
 
+  boardUI.addResetListener(() => {
+    resetGame()
+    boardUI.hideResetOverlay()
+  })
+
   // When the player clicks on the board
   board.addEventListener('contextmenu', e => { e.preventDefault(); return false })
   board.addEventListener('mouseup', mouseEvent => {
@@ -60,6 +65,10 @@ window.onload = function() {
       minesweeper
         .uncover(coordinates)
         .forEach(boardUI.uncoverCell)
+
+      if (minesweeper.victory || minesweeper.gameOver) {
+        boardUI.showResetOverlay()
+      }
 
     // flag button was pressed
     } else if (mouseEvent.button === 2) {

@@ -34,14 +34,29 @@
         </div>
       </div>
 
-      <div
-        class="board"
-        id="board"
-        unselectable="on"
-        onselectstart="return false;"
-        onmousedown="return false;"
-      ></div>
+      <div class="board-and-overlay">
+        <div
+          class="board"
+          id="board"
+          unselectable="on"
+          onselectstart="return false;"
+          onmousedown="return false;"
+        ></div>
 
+        <div
+          class="reset-overlay"
+          unselectable="on"
+          onselectstart="return false;"
+          onmousedown="return false;"
+        >
+          <button
+            class="reset"
+            id="reset-button"
+          >
+            Jugar de nuevo
+          </button>
+        </div>
+      </div>
     </div>
   </main>
 

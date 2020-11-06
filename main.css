@@ -39,6 +39,8 @@ select.dropdown {
 }
 
 .board {
+  position: relative;
+  z-index: 30;
   display: grid;
   padding: 2px;
   background-color: darkgreen;
@@ -97,4 +99,41 @@ select.dropdown {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.board-and-overlay {
+  position: relative;
+} 
+
+.reset-overlay {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: darkgray;
+  display: grid;
+  grid-row: auto;
+  align-items: center;
+  justify-items: center;
+  background-color: rgba(126, 161, 120, 0.4);
+}
+
+button.reset {
+  font-family: inherit;
+  font-size: 1em;
+  padding: 1em;
+  border: 0;
+  border-radius: 10px;
+}
+button.reset:hover{
+  background-color: rgb(224, 224, 224);
+}
+button.reset:active {
+  background-color: rgb(179, 179, 179);
+}
+button.reset:focus {
+  outline: none;
+  box-shadow: none;
 }

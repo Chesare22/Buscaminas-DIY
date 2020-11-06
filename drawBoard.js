@@ -117,5 +117,16 @@ const drawBoard = ({
         column: Math.floor(left * totalRows / board.offsetHeight),
       }
     },
+    addResetListener(cb) {
+      document.getElementById('reset-button').addEventListener('click', cb)
+    },
+
+    // The above functions work because the overlay's z-index is 20
+    showResetOverlay() {
+      board.style['z-index'] = 10
+    },
+    hideResetOverlay() {
+      board.style['z-index'] = 30
+    },
   }
 }
